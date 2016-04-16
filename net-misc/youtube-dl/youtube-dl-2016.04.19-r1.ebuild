@@ -1,12 +1,12 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
-PYTHON_COMPAT=(python{2_7,3_3,3_4,3_5})
-DISTUTILS_SINGLE_IMPL=true
-inherit bash-completion-r1 distutils-r1 eutils
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} )
+
+inherit bash-completion-r1 distutils-r1
 
 DESCRIPTION="Download videos from YouTube.com (and more sites...)"
 HOMEPAGE="https://rg3.github.com/youtube-dl/"
@@ -19,12 +19,12 @@ IUSE="offensive test"
 
 DEPEND="
 	dev-python/setuptools[${PYTHON_USEDEP}]
-	test? ( dev-python/nose[coverage(+)] )
+	test? ( dev-python/nose[coverage(+),${PYTHON_USEDEP}] )
 "
 
 S="${WORKDIR}/${PN}"
 
-src_prepare() {
+python_prepare_all() {
 	if ! use offensive; then
 		sed -i -e "/__version__/s|'$|-gentoo_no_offensive_sites'|g" \
 			youtube_dl/version.py || die
@@ -42,6 +42,8 @@ src_prepare() {
 		local mxxx=(
 			pornhub xhamster tnaflix
 		)
+		local xxx_all=( "${xxx[@]}" "${mxxx[@]}" )
+
 		# do single line imports
 		sed -i \
 			-e $( printf '/%s/d;' ${xxx[@]} ) \
@@ -59,35 +61,20 @@ src_prepare() {
 			youtube_dl/extractor/generic.py \
 			|| die
 
-		rm \
-			$( printf 'youtube_dl/extractor/%s.py ' ${xxx[@]} ) \
-			$( printf 'youtube_dl/extractor/%s.py ' ${mxxx[@]} ) \
+		rm -v -f \
+			$( printf 'youtube_dl/extractor/%s.py ' ${xxx_all[@]} ) \
 			test/test_age_restriction.py \
 			|| die
 	fi
 
-	epatch_user
+	local sed_args=(
+		-e "s|etc/bash_completion.d|$(get_bashcompdir)|"
+		-e 's|etc/fish/completions|share/fish/completions|'
+	)
+	sed -i "${sed_args[@]}" 'setup.py'
+
+	distutils-r1_python_prepare_all
 }
 
-src_compile() {
-	distutils-r1_src_compile
-}
-
-src_test() {
-	emake test
-}
-
-src_install() {
-	python_domodule youtube_dl
-	dobin bin/${PN}
-
-	dodoc README.txt
-	doman ${PN}.1
-
-	newbashcomp ${PN}.bash-completion ${PN}
-
-	insinto /usr/share/zsh/site-functions
-	newins ${PN}.zsh _${PN}
-
-	python_fix_shebang "${ED}"
-}
+# prevent einstalldocs from scouting for additional docs
+DOCS=()
