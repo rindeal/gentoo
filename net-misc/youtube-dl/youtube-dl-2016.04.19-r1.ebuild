@@ -87,10 +87,7 @@ src_install() {
 	newbashcomp ${PN}.bash-completion ${PN}
 
 	insinto /usr/share/zsh/site-functions
-	newins youtube-dl.zsh _youtube-dl
-
-	insinto /usr/share/fish/completions
-	doins youtube-dl.fish
+	newins ${PN}.zsh _${PN}
 
 	python_fix_shebang "${ED}"
 }
