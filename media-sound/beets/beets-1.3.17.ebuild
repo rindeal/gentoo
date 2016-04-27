@@ -18,8 +18,8 @@ SLOT='0'
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 KEYWORDS='~amd64 ~arm ~x86'
-IUSE='amarok bpd chroma convert doc discogs echonest fetchart flac gstreamer lastgenre lastimport
-	lyrics metasync mpdstats ogg opus replaygain test web'
+IUSE='amarok bpd chroma convert doc discogs echonest embyupdate fetchart flac gstreamer lastgenre
+	lastimport lyrics metasync mpdstats ogg opus replaygain test web'
 
 RDEPEND="
 	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
@@ -44,6 +44,7 @@ RDEPEND="
 	discogs? ( >=dev-python/discogs-client-2.1:0[${PYTHON_USEDEP}] )
 	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
 	echonest? ( >=dev-python/pyechonest-8.0.1:0[${PYTHON_USEDEP}] )
+	embyupdate? ( dev-python/requests:0[${PYTHON_USEDEP}] )
 	fetchart? ( dev-python/requests:0[${PYTHON_USEDEP}] )
 	lastgenre? ( dev-python/pylast:0[${PYTHON_USEDEP}] )
 	lastimport? ( dev-python/pylast:0[${PYTHON_USEDEP}] )
