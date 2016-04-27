@@ -18,8 +18,8 @@ SLOT='0'
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 KEYWORDS='~amd64 ~arm ~x86'
-IUSE='bpd chroma convert doc discogs echonest fetchart flac gstreamer lastgenre lastimport lyrics
-	mpdstats ogg opus replaygain test web'
+IUSE='amarok bpd chroma convert doc discogs echonest fetchart flac gstreamer lastgenre lastimport
+	lyrics metasync mpdstats ogg opus replaygain test web'
 
 RDEPEND="
 	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
@@ -30,6 +30,7 @@ RDEPEND="
 	dev-python/unidecode[${PYTHON_USEDEP}]
 	>=media-libs/mutagen-1.27[${PYTHON_USEDEP}]
 
+	amarok? ( media-sound/amarok )
 	bpd? ( dev-python/bluelet[${PYTHON_USEDEP}] )
 	chroma? (
 		dev-python/pyacoustid:0[${PYTHON_USEDEP}]
@@ -47,6 +48,7 @@ RDEPEND="
 	lastgenre? ( dev-python/pylast:0[${PYTHON_USEDEP}] )
 	lastimport? ( dev-python/pylast:0[${PYTHON_USEDEP}] )
 	lyrics? ( dev-python/requests:0[${PYTHON_USEDEP}] )
+	metasync? ( amarok? ( dev-python/dbus-python:0[${PYTHON_USEDEP}] ) )
 	mpdstats? ( dev-python/python-mpd[${PYTHON_USEDEP}] )
 	replaygain? (
 		gstreamer? (
@@ -82,7 +84,7 @@ REQUIRED_USE='
 
 python_prepare_all() {
 	# remove plugins that do not have appropriate dependencies installed
-	for flag in bpd chroma convert discogs echonest lastgenre lastimport mpdstats replaygain web; do
+	for flag in bpd chroma convert discogs echonest lastgenre lastimport metasync mpdstats replaygain web; do
 		if ! use ${flag}; then
 			rm -v beetsplug/${flag}.py || \
 			rm -rv beetsplug/${flag}/ ||
@@ -90,7 +92,7 @@ python_prepare_all() {
 		fi
 	done
 
-	for flag in bpd lastgenre web; do
+	for flag in bpd lastgenre metasync web; do
 		if ! use ${flag}; then
 			sed -e "s:'beetsplug.${flag}',::" -i setup.py || \
 				die "Unable to disable ${flag} plugin "

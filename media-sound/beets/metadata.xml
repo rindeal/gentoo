@@ -27,6 +27,7 @@
     shockingly simple if you know a little Python.
   </longdescription>
   <use>
+    <flag name="amarok">Enable support for <pkg>media-sound/amarok</pkg></flag>
     <flag name="beatport">Enable support for beatport.com API</flag>
     <flag name="bpd">
       Enable support for <pkg>media-sound/mpd</pkg> server emulation
@@ -49,6 +50,8 @@
       your Last.fm (http://last.fm/) library</flag>
     <flag name="lyrics">Enable support for fetching and storing song lyrics from
       databases on the Web</flag>
+    <flag name="metasync">Enable support for fetching certain metadata from other sources:
+      for example, your favorite audio player</flag>
     <flag name="mpdstats">Enable support for collecting statistic about
       listening habits from <pkg>media-sound/mpd</pkg></flag>
     <flag name="opus">Enable opus support in gstreamer-based replaygain</flag>
