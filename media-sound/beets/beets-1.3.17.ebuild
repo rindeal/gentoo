@@ -18,8 +18,8 @@ SLOT='0'
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 KEYWORDS='~amd64 ~arm ~x86'
-IUSE='bpd chroma convert doc discogs echonest fetchart flac gstreamer lastgenre lastimport mpdstats
-	ogg opus replaygain test web'
+IUSE='bpd chroma convert doc discogs echonest fetchart flac gstreamer lastgenre lastimport lyrics
+	mpdstats ogg opus replaygain test web'
 
 RDEPEND="
 	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
@@ -46,6 +46,7 @@ RDEPEND="
 	fetchart? ( dev-python/requests:0[${PYTHON_USEDEP}] )
 	lastgenre? ( dev-python/pylast:0[${PYTHON_USEDEP}] )
 	lastimport? ( dev-python/pylast:0[${PYTHON_USEDEP}] )
+	lyrics? ( dev-python/requests:0[${PYTHON_USEDEP}] )
 	mpdstats? ( dev-python/python-mpd[${PYTHON_USEDEP}] )
 	replaygain? (
 		gstreamer? (
