@@ -61,6 +61,9 @@
       music library</flag>
     <flag name="replaygain">Enable support for Replay Gain metadata calculation
       during import</flag>
+    <flag name="thumbnails">Enable support for creating thumbnails your for album folders
+      with the album cover. This works on freedesktop.org-compliant file managers such as
+      Nautilus or Thunar.</flag>
     <flag name="web">
       Enable embedded webserver support through <pkg>dev-python/flask</pkg>
     </flag>

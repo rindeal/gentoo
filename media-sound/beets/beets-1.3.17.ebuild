@@ -19,7 +19,7 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 KEYWORDS='~amd64 ~arm ~x86'
 IUSE='amarok bpd chroma convert doc discogs echonest embyupdate fetchart flac gstreamer lastgenre
-	lastimport lyrics metasync mpdstats ogg opus plexupdate replaygain test web'
+	lastimport lyrics metasync mpdstats ogg opus plexupdate replaygain test thumbnails web'
 
 RDEPEND="
 	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
@@ -66,6 +66,14 @@ RDEPEND="
 			media-sound/aacgain
 		) )
 	)
+	thumbnails? (
+		dev-python/pyxdg:0[${PYTHON_USEDEP}]
+		virtual/python-pathlib:0[${PYTHON_USEDEP}]
+		|| (
+			dev-python/pillow:0[${PYTHON_USEDEP}]
+			media-gfx/imagemagick:0
+		)
+	)
 	web? ( dev-python/flask[${PYTHON_USEDEP}] )"
 DEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]
@@ -82,11 +90,12 @@ DEPEND="${RDEPEND}
 	)"
 REQUIRED_USE='
 	chroma? ( || ( ffmpeg gstreamer mad ) )
+	thumbnails? ( fetchart )
 '
 
 python_prepare_all() {
 	# remove plugins that do not have appropriate dependencies installed
-	for flag in bpd chroma convert discogs echonest lastgenre lastimport metasync mpdstats plexupdate replaygain web; do
+	for flag in bpd chroma convert discogs echonest lastgenre lastimport metasync mpdstats plexupdate replaygain thumbnails web; do
 		if ! use ${flag}; then
 			rm -v beetsplug/${flag}.py || \
 			rm -rv beetsplug/${flag}/ ||
@@ -94,7 +103,7 @@ python_prepare_all() {
 		fi
 	done
 
-	for flag in bpd lastgenre metasync web; do
+	for flag in bpd lastgenre metasync thumbnails web; do
 		if ! use ${flag}; then
 			sed -e "s:'beetsplug.${flag}',::" -i setup.py || \
 				die "Unable to disable ${flag} plugin "
