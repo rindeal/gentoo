@@ -41,6 +41,8 @@
       into its metadata</flag>
     <flag name="echonest">Enable support for fetching and storing acoustic
       attributes of a track from the Echo Nest (http://the.echonest.com/)</flag>
+    <flag name="fetchart">Enable support for retrieving album art images from various
+      sources on the Web and storing them as image files</flag>
     <flag name="lastgenre">Enable support for importing music genres from
       last.fm tags</flag>
     <flag name="mpdstats">Enable support for collecting statistic about
