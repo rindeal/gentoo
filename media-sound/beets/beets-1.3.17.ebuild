@@ -5,20 +5,21 @@
 EAPI=6
 
 PYTHON_COMPAT=( python2_7 )
-PYTHON_REQ_USE="sqlite"
+PYTHON_REQ_USE='sqlite'
 DISTUTILS_SINGLE_IMPL=true
 
 inherit distutils-r1 eutils
 
-DESCRIPTION="A media library management system for obsessive-compulsive music geeks"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
-HOMEPAGE="http://beets.io"
+DESCRIPTION='A media library management system for obsessive-compulsive music geeks'
+HOMEPAGE='http://beets.io'
+LICENSE='MIT'
 
-KEYWORDS="~amd64 ~arm ~x86"
-SLOT="0"
-LICENSE="MIT"
-IUSE="bpd chroma convert doc discogs echonest flac gstreamer lastgenre mpdstats
-	ogg opus replaygain test web"
+SLOT='0'
+SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+
+KEYWORDS='~amd64 ~arm ~x86'
+IUSE='bpd chroma convert doc discogs echonest flac gstreamer lastgenre mpdstats ogg opus replaygain
+	test web'
 
 RDEPEND=">=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
 	dev-python/jellyfish[${PYTHON_USEDEP}]
@@ -77,7 +78,7 @@ python_compile_all() {
 python_test() {
 	cd test
 	if ! use web; then
-		rm -v test_web.py || die "Failed to remove test_web.py"
+		rm -v test_web.py || die 'Failed to remove test_web.py'
 	fi
 	"${PYTHON}" testall.py || die "Testsuite failed"
 }
