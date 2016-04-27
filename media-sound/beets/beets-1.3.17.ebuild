@@ -31,7 +31,14 @@ RDEPEND="
 	>=media-libs/mutagen-1.27[${PYTHON_USEDEP}]
 
 	bpd? ( dev-python/bluelet[${PYTHON_USEDEP}] )
-	chroma? ( dev-python/pyacoustid[${PYTHON_USEDEP}] )
+	chroma? (
+		dev-python/pyacoustid:0[${PYTHON_USEDEP}]
+		gstreamer? (
+			dev-python/gst-python[${PYTHON_USEDEP}]
+			media-libs/gstreamer[introspection]
+		)
+		mad? ( dev-python/pymad:0[${PYTHON_USEDEP}] )
+	)
 	convert? ( media-video/ffmpeg:0[encode] )
 	discogs? ( dev-python/discogs-client[${PYTHON_USEDEP}] )
 	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
@@ -66,6 +73,9 @@ DEPEND="${RDEPEND}
 		dev-python/rarfile:0[${PYTHON_USEDEP}]
 		dev-python/responses:0[${PYTHON_USEDEP}]
 	)"
+REQUIRED_USE='
+	chroma? ( || ( ffmpeg gstreamer mad ) )
+'
 
 python_prepare_all() {
 	# remove plugins that do not have appropriate dependencies installed

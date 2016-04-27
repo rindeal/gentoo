@@ -32,7 +32,7 @@
       Enable support for <pkg>media-sound/mpd</pkg> server emulation
     </flag>
     <flag name="chroma">Enable support for acoustic fingerprinting plugin using
-      <pkg>media-libs/chromaprint</pkg></flag>
+      <pkg>dev-python/pyacoustid</pkg> and <pkg>media-libs/chromaprint</pkg></flag>
     <flag name="convert">Enable support for the convert plugin which makes it
       possible to transcode files</flag>
     <flag name="discogs">Enable support for the discogs API plugin</flag>
