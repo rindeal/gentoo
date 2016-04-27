@@ -19,7 +19,7 @@ SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 KEYWORDS='~amd64 ~arm ~x86'
 IUSE='amarok bpd chroma convert doc discogs echonest embyupdate fetchart flac gstreamer lastgenre
-	lastimport lyrics metasync mpdstats ogg opus replaygain test web'
+	lastimport lyrics metasync mpdstats ogg opus plexupdate replaygain test web'
 
 RDEPEND="
 	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
@@ -51,6 +51,7 @@ RDEPEND="
 	lyrics? ( dev-python/requests:0[${PYTHON_USEDEP}] )
 	metasync? ( amarok? ( dev-python/dbus-python:0[${PYTHON_USEDEP}] ) )
 	mpdstats? ( dev-python/python-mpd[${PYTHON_USEDEP}] )
+	plexupdate? ( dev-python/requests:0[${PYTHON_USEDEP}] )
 	replaygain? (
 		gstreamer? (
 			media-libs/gstreamer:1.0[introspection]
@@ -85,7 +86,7 @@ REQUIRED_USE='
 
 python_prepare_all() {
 	# remove plugins that do not have appropriate dependencies installed
-	for flag in bpd chroma convert discogs echonest lastgenre lastimport metasync mpdstats replaygain web; do
+	for flag in bpd chroma convert discogs echonest lastgenre lastimport metasync mpdstats plexupdate replaygain web; do
 		if ! use ${flag}; then
 			rm -v beetsplug/${flag}.py || \
 			rm -rv beetsplug/${flag}/ ||
