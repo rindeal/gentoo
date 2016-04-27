@@ -40,7 +40,7 @@
     <flag name="echonest_tempo">Enable support for writing the BPM of a track
       into its metadata</flag>
     <flag name="echonest">Enable support for fetching and storing acoustic
-      attributes of a track from Echo Nest</flag>
+      attributes of a track from the Echo Nest (http://the.echonest.com/)</flag>
     <flag name="lastgenre">Enable support for importing music genres from
       last.fm tags</flag>
     <flag name="mpdstats">Enable support for collecting statistic about
