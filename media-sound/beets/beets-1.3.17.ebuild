@@ -21,13 +21,15 @@ KEYWORDS='~amd64 ~arm ~x86'
 IUSE='bpd chroma convert doc discogs echonest flac gstreamer lastgenre mpdstats ogg opus replaygain
 	test web'
 
-RDEPEND=">=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
+RDEPEND="
+	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
 	dev-python/jellyfish[${PYTHON_USEDEP}]
 	dev-python/munkres[${PYTHON_USEDEP}]
 	>=dev-python/python-musicbrainz-ngs-0.4[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
 	dev-python/unidecode[${PYTHON_USEDEP}]
 	>=media-libs/mutagen-1.27[${PYTHON_USEDEP}]
+
 	bpd? ( dev-python/bluelet[${PYTHON_USEDEP}] )
 	chroma? ( dev-python/pyacoustid[${PYTHON_USEDEP}] )
 	convert? ( media-video/ffmpeg:0[encode] )
@@ -37,17 +39,33 @@ RDEPEND=">=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
 	mpdstats? ( dev-python/python-mpd[${PYTHON_USEDEP}] )
 	lastgenre? ( dev-python/pylast[${PYTHON_USEDEP}] )
 	replaygain? (
-		gstreamer? ( media-libs/gstreamer:1.0[introspection]
+		gstreamer? (
+			media-libs/gstreamer:1.0[introspection]
 			media-libs/gst-plugins-good:1.0
 			dev-python/pygobject:3[${PYTHON_USEDEP}]
 			ogg? ( media-plugins/gst-plugins-ogg )
 			flac? ( media-plugins/gst-plugins-flac:1.0 )
-			opus? ( media-plugins/gst-plugins-opus:1.0 ) )
-		!gstreamer? ( || ( media-sound/mp3gain
-			media-sound/aacgain ) ) )
+			opus? ( media-plugins/gst-plugins-opus:1.0 )
+		)
+		!gstreamer? ( || (
+			media-sound/mp3gain
+			media-sound/aacgain
+		) )
+	)
 	web? ( dev-python/flask[${PYTHON_USEDEP}] )"
 DEPEND="${RDEPEND}
-	dev-python/setuptools[${PYTHON_USEDEP}]"
+	dev-python/setuptools[${PYTHON_USEDEP}]
+	test? (
+		dev-python/beautifulsoup:4[${PYTHON_USEDEP}]
+		dev-python/flask:0[${PYTHON_USEDEP}]
+		dev-python/mock:0[${PYTHON_USEDEP}]
+		dev-python/pathlib:0[${PYTHON_USEDEP}]
+		dev-python/pyechonest:0[${PYTHON_USEDEP}]
+		dev-python/pylast:0[${PYTHON_USEDEP}]
+		dev-python/pyxdg:0[${PYTHON_USEDEP}]
+		dev-python/rarfile:0[${PYTHON_USEDEP}]
+		dev-python/responses:0[${PYTHON_USEDEP}]
+	)"
 
 python_prepare_all() {
 	# remove plugins that do not have appropriate dependencies installed
