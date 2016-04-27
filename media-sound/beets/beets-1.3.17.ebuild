@@ -21,6 +21,9 @@ KEYWORDS='~amd64 ~arm ~x86'
 IUSE='amarok bpd chroma convert doc discogs echonest embyupdate fetchart flac gstreamer lastgenre
 	lastimport lyrics metasync mpdstats ogg opus plexupdate replaygain test thumbnails web'
 
+# TODO:
+#  - http://beets.readthedocs.org/en/v1.3.17/plugins/index.html#miscellaneous
+#  - http://beets.readthedocs.org/en/v1.3.17/plugins/index.html#other-plugins
 RDEPEND="
 	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
 	dev-python/jellyfish[${PYTHON_USEDEP}]
