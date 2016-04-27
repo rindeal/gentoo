@@ -18,8 +18,8 @@ SLOT='0'
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 
 KEYWORDS='~amd64 ~arm ~x86'
-IUSE='bpd chroma convert doc discogs echonest fetchart flac gstreamer lastgenre mpdstats ogg opus replaygain
-	test web'
+IUSE='bpd chroma convert doc discogs echonest fetchart flac gstreamer lastgenre lastimport mpdstats
+	ogg opus replaygain test web'
 
 RDEPEND="
 	>=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
@@ -45,6 +45,7 @@ RDEPEND="
 	echonest? ( >=dev-python/pyechonest-8.0.1:0[${PYTHON_USEDEP}] )
 	fetchart? ( dev-python/requests:0[${PYTHON_USEDEP}] )
 	lastgenre? ( dev-python/pylast:0[${PYTHON_USEDEP}] )
+	lastimport? ( dev-python/pylast:0[${PYTHON_USEDEP}] )
 	mpdstats? ( dev-python/python-mpd[${PYTHON_USEDEP}] )
 	replaygain? (
 		gstreamer? (
@@ -80,7 +81,7 @@ REQUIRED_USE='
 
 python_prepare_all() {
 	# remove plugins that do not have appropriate dependencies installed
-	for flag in bpd chroma convert discogs echonest lastgenre mpdstats replaygain web; do
+	for flag in bpd chroma convert discogs echonest lastgenre lastimport mpdstats replaygain web; do
 		if ! use ${flag}; then
 			rm -v beetsplug/${flag}.py || \
 			rm -rv beetsplug/${flag}/ ||

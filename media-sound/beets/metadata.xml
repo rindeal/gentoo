@@ -45,6 +45,8 @@
       sources on the Web and storing them as image files</flag>
     <flag name="lastgenre">Enable support for importing music genres from
       Last.fm (http://last.fm/) tags</flag>
+    <flag name="lastimport">Enable support for importing play-count data from
+      your Last.fm (http://last.fm/) library</flag>
     <flag name="mpdstats">Enable support for collecting statistic about
       listening habits from <pkg>media-sound/mpd</pkg></flag>
     <flag name="opus">Enable opus support in gstreamer-based replaygain</flag>
