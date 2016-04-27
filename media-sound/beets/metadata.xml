@@ -35,7 +35,8 @@
       <pkg>dev-python/pyacoustid</pkg> and <pkg>media-libs/chromaprint</pkg></flag>
     <flag name="convert">Enable support for the convert plugin which makes it
       possible to transcode files</flag>
-    <flag name="discogs">Enable support for the discogs API plugin</flag>
+    <flag name="discogs">Enable support for autotagging using Discogs database
+      (https://www.discogs.com/)</flag>
     <flag name="echonest_tempo">Enable support for writing the BPM of a track
       into its metadata</flag>
     <flag name="echonest">Enable support for fetching and storing acoustic
