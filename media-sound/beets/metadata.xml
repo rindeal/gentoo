@@ -44,7 +44,7 @@
     <flag name="fetchart">Enable support for retrieving album art images from various
       sources on the Web and storing them as image files</flag>
     <flag name="lastgenre">Enable support for importing music genres from
-      last.fm tags</flag>
+      Last.fm (http://last.fm/) tags</flag>
     <flag name="mpdstats">Enable support for collecting statistic about
       listening habits from <pkg>media-sound/mpd</pkg></flag>
     <flag name="opus">Enable opus support in gstreamer-based replaygain</flag>
