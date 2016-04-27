@@ -43,7 +43,7 @@ RDEPEND="
 		)
 		mad? ( dev-python/pymad:0[${PYTHON_USEDEP}] )
 	)
-	convert? ( media-video/ffmpeg:0[encode] )
+	convert? ( virtual/ffmpeg:0[encode] )
 	discogs? ( >=dev-python/discogs-client-2.1:0[${PYTHON_USEDEP}] )
 	doc? ( dev-python/sphinx[${PYTHON_USEDEP}] )
 	echonest? ( >=dev-python/pyechonest-8.0.1:0[${PYTHON_USEDEP}] )
