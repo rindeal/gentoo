@@ -14,7 +14,7 @@ DESCRIPTION="A media library management system for obsessive-compulsive music ge
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
 HOMEPAGE="http://beets.radbox.org/ https://pypi.python.org/pypi/beets"
 
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~arm ~x86"
 SLOT="0"
 LICENSE="MIT"
 IUSE="bpd chroma convert doc discogs echonest flac gstreamer lastgenre mpdstats
