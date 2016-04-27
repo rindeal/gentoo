@@ -1,14 +1,14 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
+
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="sqlite"
-inherit distutils-r1 eutils
+DISTUTILS_SINGLE_IMPL=true
 
-MY_PV=${PV/_beta/-beta.}
-MY_P=${PN}-${MY_PV}
+inherit distutils-r1 eutils
 
 DESCRIPTION="A media library management system for obsessive-compulsive music geeks"
 SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
@@ -48,14 +48,12 @@ RDEPEND=">=dev-python/enum34-1.0.4[${PYTHON_USEDEP}]
 DEPEND="${RDEPEND}
 	dev-python/setuptools[${PYTHON_USEDEP}]"
 
-S=${WORKDIR}/${MY_P}
-
-src_prepare() {
+python_prepare_all() {
 	# remove plugins that do not have appropriate dependencies installed
 	for flag in bpd chroma convert discogs echonest lastgenre mpdstats replaygain web; do
 		if ! use ${flag}; then
-			rm -r beetsplug/${flag}.py || \
-			rm -r beetsplug/${flag}/ ||
+			rm -v beetsplug/${flag}.py || \
+			rm -rv beetsplug/${flag}/ ||
 				die "Unable to remove ${flag} plugin"
 		fi
 	done
@@ -67,8 +65,9 @@ src_prepare() {
 		fi
 	done
 
-	use bpd || rm -f test/test_player.py
+	use bpd || rm -vf test/test_player.py || die
 
+	distutils-r1_python_prepare_all
 }
 
 python_compile_all() {
@@ -78,12 +77,14 @@ python_compile_all() {
 python_test() {
 	cd test
 	if ! use web; then
-		rm test_web.py || die "Failed to remove test_web.py"
+		rm -v test_web.py || die "Failed to remove test_web.py"
 	fi
 	"${PYTHON}" testall.py || die "Testsuite failed"
 }
 
 python_install_all() {
 	doman man/beet.1 man/beetsconfig.5
-	use doc && dohtml -r docs/_build/html/
+	use doc && HTML_DOCS=( 'docs/_build/html/' )
+
+	distutils-r1_python_install_all
 }
