@@ -2,22 +2,54 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=5
+EAPI=6
 
-PYTHON_COMPAT=( python{2_7,3_3,3_4} )
+PYTHON_COMPAT=( python{2_7,3_{3,4,5}} pypy{,3} )
+DISTUTILS_SINGLE_IMPL=true
 
-inherit distutils-r1
+inherit bash-completion-r1 distutils-r1
 
-DESCRIPTION="A CLI, cURL-like tool for humans"
-HOMEPAGE="http://httpie.org/ https://pypi.python.org/pypi/httpie"
-SRC_URI="mirror://pypi/${PN:0:1}/${PN}/${P}.tar.gz"
+DESCRIPTION='CLI HTTP client, user-friendly cURL-like tool with intuitive UI, JSON, ...'
+HOMEPAGE='http://httpie.org/ https://github.com/jkbrzt/httpie'
+LICENSE='BSD'
 
-LICENSE="BSD"
-SLOT="0"
-KEYWORDS="~amd64 ~x86"
-IUSE=""
+SLOT='0'
+SRC_URI="https://github.com/jkbrzt/httpie/archive/${PV}.tar.gz -> ${P}.tar.gz"
 
-DEPEND=""
+RESTRICT='primaryuri'
+KEYWORDS='~amd64 ~arm ~x86'
+IUSE='test'
+
+DEPEND="
+	test? (
+		dev-python/docutils:0[${PYTHON_USEDEP}]
+		dev-python/mock:0[${PYTHON_USEDEP}]
+		dev-python/pytest:0[${PYTHON_USEDEP}]
+		dev-python/pytest-cov:0[${PYTHON_USEDEP}]
+		dev-python/pytest-httpbin:0[${PYTHON_USEDEP}]
+		dev-python/tox:0[${PYTHON_USEDEP}]
+		dev-python/wheel:0[${PYTHON_USEDEP}]
+	)"
 RDEPEND="${DEPEND}
-	>=dev-python/requests-2.3.0[${PYTHON_USEDEP}]
-	>=dev-python/pygments-1.5[${PYTHON_USEDEP}]"
+	dev-python/pygments:0[${PYTHON_USEDEP}]
+	dev-python/requests:0[${PYTHON_USEDEP}]"
+
+DOCS=( 'AUTHORS.rst' 'CHANGELOG.rst' 'README.rst' )
+
+python_prepare_all() {
+	# `init` target calls `pip install`
+	sed -i 's|test: init|test:|' -- 'Makefile' || die
+
+	distutils-r1_python_prepare_all
+}
+
+python_test() {
+	emake test
+}
+
+python_install_all() {
+	distutils-r1_python_install_all
+
+	newbashcomp 'httpie-completion.bash' 'http'
+}
+
